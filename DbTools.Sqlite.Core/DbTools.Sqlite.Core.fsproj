@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Encryption\KeyOperations.fs" />
     <Compile Include="Encryption\EncryptionUtils.fs" />
   </ItemGroup>
 

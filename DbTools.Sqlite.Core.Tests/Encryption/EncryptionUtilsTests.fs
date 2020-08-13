@@ -12,7 +12,7 @@ let executionDirPath = Assembly.GetExecutingAssembly().Location
 let appDataPath = Path.Combine(executionDirPath, "appdata")
 
 [<SetUp>]
-let setup () =
+let Setup () =
     match appDataPath |> Directory.Exists with
     | false -> appDataPath |> Directory.CreateDirectory |> ignore
     | true -> ()
@@ -21,11 +21,20 @@ let setup () =
     Test; 
     Category("Local")
 >]
-let willCreateEncryptAndReEncryptDatabase () =
+let ShouldCreateEncryptAndReEncryptDatabase () =
     let dbFileName = Path.ChangeExtension(Guid.NewGuid().ToString(), ".sqlite3")
     let dataSource = Path.Combine (appDataPath, dbFileName)
-    let password = Guid.NewGuid().ToString()
+    let initialKey = Guid.NewGuid().ToString()
 
-    EncryptionUtils.encrypt dataSource password
-    Assert.IsTrue(EncryptionUtils.isEncrypted dataSource)
-    Assert.IsTrue(EncryptionUtils.testEncryption dataSource password)
+    (dataSource, initialKey) |> EncryptionUtils.encrypt
+
+    dataSource |> EncryptionUtils.isEncrypted |> Assert.IsTrue
+    (dataSource, initialKey) |> EncryptionUtils.testEncryption |> Assert.IsTrue
+
+    let newKey = Guid.NewGuid().ToString()
+    
+    (dataSource, initialKey, newKey) |> EncryptionUtils.changeEncryptionKey 
+
+    dataSource |> EncryptionUtils.isEncrypted |> Assert.IsTrue
+    (dataSource, initialKey) |> EncryptionUtils.testEncryption |> Assert.IsFalse
+    (dataSource, newKey) |> EncryptionUtils.testEncryption |> Assert.IsTrue

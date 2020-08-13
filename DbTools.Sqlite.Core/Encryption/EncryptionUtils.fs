@@ -1,31 +1,11 @@
 ﻿namespace DbTools.Sqlite.Core.Encryption
 
 open Microsoft.Data.Sqlite
+open KeyOperations
 
 module EncryptionUtils =
     [<Literal>]
     let DbOpenFailureErrorCode = 26
-
-    type private KeyOperations = Key = 'K' | Rekey = 'R'
-
-    let private getQuotedParameter parameter (connection : SqliteConnection) =
-        let command = connection.CreateCommand()
-        command.CommandText <- "SELECT quote(@parameter)"
-        command.Parameters.AddWithValue("@parameter", parameter) |> ignore
-        let quotedParameter = downcast command.ExecuteScalar() : string
-        quotedParameter
-
-    let private executeKeyOperation keyOperation key connection =
-        let keyOperationString = match keyOperation with
-                                 | KeyOperations.Key -> "key"
-                                 | KeyOperations.Rekey -> "rekey"
-                                 | _ -> failwith "Invalid key operations."
-        
-        let quotedKey = connection |> getQuotedParameter key
-
-        let command = connection.CreateCommand()
-        command.CommandText <- "PRAGMA " + keyOperationString + " = " + quotedKey
-        command.ExecuteNonQuery() |> ignore
 
     let private tryPerformDbRead connectionString =
         try
@@ -42,7 +22,7 @@ module EncryptionUtils =
                                                    | DbOpenFailureErrorCode -> false
                                                    | _ -> raise sqliteException
 
-    let testEncryption dataSource key =
+    let testEncryption (dataSource, key) =
         let connectionString 
             = SqliteConnectionStringBuilder(DataSource = dataSource,
                                             Password = key,
@@ -50,9 +30,9 @@ module EncryptionUtils =
         
         connectionString |> tryPerformDbRead
 
-    let isEncrypted dataSource = not (testEncryption dataSource "")
+    let isEncrypted dataSource = not ((dataSource, "") |> testEncryption)
 
-    let encrypt dataSource key =
+    let encrypt (dataSource, key) =
         let connectionStringBuilder 
             = new SqliteConnectionStringBuilder(DataSource = dataSource, 
                                                 Mode = SqliteOpenMode.ReadWriteCreate)
@@ -61,10 +41,10 @@ module EncryptionUtils =
         use connection = new SqliteConnection(connectionString)
         connection.Open()
 
-        connection |> executeKeyOperation KeyOperations.Key key
-        connection |> executeKeyOperation KeyOperations.Rekey key
+        connection |> executeKeyOperation KeyMethod.Key key
+        connection |> executeKeyOperation KeyMethod.Rekey key
 
-    let changeEncryptionKey dataSource currentKey newKey =
+    let changeEncryptionKey (dataSource, currentKey, newKey) =
         let connectionStringBuilder 
             = new SqliteConnectionStringBuilder(DataSource = dataSource,
                                                 Password = currentKey,
@@ -74,5 +54,5 @@ module EncryptionUtils =
         use connection = new SqliteConnection(connectionString)
         connection.Open()
         
-        connection |> executeKeyOperation KeyOperations.Rekey newKey
+        connection |> executeKeyOperation KeyMethod.Rekey newKey
         
