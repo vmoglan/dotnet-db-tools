@@ -50,7 +50,7 @@ module EncryptionUtils =
         
         connectionString |> tryPerformDbRead
 
-    let isEncrypted dataSource = testEncryption dataSource ""
+    let isEncrypted dataSource = not (testEncryption dataSource "")
 
     let encrypt dataSource key =
         let connectionStringBuilder 
