@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DbTools.Sqlite.Core", "DbTools.Sqlite.Core\DbTools.Sqlite.Core.fsproj", "{52747F4A-EA4A-44AB-99A4-500474B247C9}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "DbTools.Sqlite.Core", "DbTools.Sqlite.Core\DbTools.Sqlite.Core.fsproj", "{52747F4A-EA4A-44AB-99A4-500474B247C9}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DbTools.Sqlite.Core.Tests", "DbTools.Sqlite.Core.Tests\DbTools.Sqlite.Core.Tests.fsproj", "{65EC29F1-56A2-4A0D-9FF2-59796D8DCDBB}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "DbTools.Sqlite.Core.Tests", "DbTools.Sqlite.Core.Tests\DbTools.Sqlite.Core.Tests.fsproj", "{65EC29F1-56A2-4A0D-9FF2-59796D8DCDBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbTools.Sqlite.PerformanceAssessment", "DbTools.Sqlite.PerformanceAssessment\DbTools.Sqlite.PerformanceAssessment.csproj", "{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{65EC29F1-56A2-4A0D-9FF2-59796D8DCDBB}.Release|x64.Build.0 = Release|Any CPU
 		{65EC29F1-56A2-4A0D-9FF2-59796D8DCDBB}.Release|x86.ActiveCfg = Release|Any CPU
 		{65EC29F1-56A2-4A0D-9FF2-59796D8DCDBB}.Release|x86.Build.0 = Release|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Release|x64.Build.0 = Release|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{E75D71C6-2F96-4003-B3CC-1660E8AB13CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DbTools.Sqlite.Core": {
+      "commandName": "Project",
+      "commandLineArgs": "-s \"C:\\Users\\vladm\\Documents\\entityDb.sqlite3\" -k \"asdfa98n12398yu42134cnas\" -c 10000 -m true"
+    }
+  }
+}
